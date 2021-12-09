@@ -1,10 +1,6 @@
 # Write a program block to calculate the electricity bill by accepting cust_no and units_consumed 
 
-drop database Electricity;
-
 create database Electricity;
-
-use Electricity;
 
 create table Rate(Rate_no int primary key,Rate_exp varchar(15),Rate int);
 
@@ -12,14 +8,12 @@ create table customer(Cust_no varchar(20) primary key,cust_name varchar(20));
 
 create table bill(Cust_no varchar(20),Date date,Bill_amt int,constraint fk_Cust_no Foreign key (Cust_no) references customer(Cust_no));
 
-insert into rate values(1,"0-100",5),(2,"101-200",7),(3,"201-300",10),(4,"300 abov",15);
+insert into rate values(1,'0-100',5),(2,'101-200',7),(3,'201-300',10),(4,'300 above',15);
+select *from rate;
 
-insert into customer values("c001","Jack"),("c002","Vishnu"),("c003","Anu"),("c004","Kiran"),("c005","Sharath");
+insert into customer values('c001','abidha'),('c002','fatma'),('c003','Ann'),('c004','derya'),('c005','kenze');
+select *from customer;
 
-
- drop procedure Calc_Bill;
-
- delimiter //
  create procedure Calc_Bill(IN cust_no varchar(20),month date ,unit float)
      begin
        declare mth date;
@@ -28,10 +22,10 @@ insert into customer values("c001","Jack"),("c002","Vishnu"),("c003","Anu"),("c0
        Set Tcust_no=cust_no;
        set Tunit=unit;
        set mth = month;
-       set rate1=(select Rate.Rate from rate where Rate_no="1");
-       set rate2=(select Rate.Rate from rate where Rate_no="2");
-       set rate3=(select Rate.Rate from rate where Rate_no="3");
-       set rate4=(select Rate.Rate from rate where Rate_no="4");
+       set rate1=(select Rate.Rate from rate where Rate_no='1');
+       set rate2=(select Rate.Rate from rate where Rate_no='2');
+       set rate3=(select Rate.Rate from rate where Rate_no='3');
+       set rate4=(select Rate.Rate from rate where Rate_no='4');
               if Tunit>0 and Tunit<=100 then
                  set total=Tunit*rate1;
                  insert into bill(Cust_no,Date,Bill_amt)values(Tcust_no,mth,total);
